@@ -9,4 +9,4 @@ $dbc=mysqli_connect($hostname, $username, $password, $dbname) OR die ("Cannot co
 
 echo "Connected to the DB ".$dbname." successfully! <br>";
 
-?>
+?> 
