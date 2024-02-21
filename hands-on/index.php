@@ -11,6 +11,7 @@
 
 <body>
     <?php
+    $email=$dbfirstname="";
     function test_input($data)
     {
         $data = trim($data);
@@ -66,8 +67,26 @@
 
         <input type="submit" name="submit" id="Login">
     </form>
+<h3>Testing Area </h3>
+<p>Feb 20, 2024</p>
+<ul>
+    <li>genral user: login and take the quizzes</li>
+    <li>admin user: login and manage the website</li>
+</ul>
 
 
+To Do:
+<ol>
+    <li>Update our database: need to add column: user_type</li>
+    <li>create admin_nav.php</li>
+    <li>Create admin functions to help manage the website</li>
+</ol>
+<?php
+echo "for developer only<br>";
+echo"Data collection from the form : <br >";
+echo $email."<br>".$dbfirstname;
+
+?>
 
 
 
