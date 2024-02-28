@@ -10,12 +10,10 @@
 </head>
 
 <body>
-
     <h2>Welcome to the Admin Edit Page </h2>
 
-    <?php
+<?php
     include("admin_navbar.php");
-    
     $id = $_GET['id'];
     echo "id of this user is ".$id."<br>";
 
@@ -46,11 +44,10 @@
 
 
 
-
-
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-
- First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"><br><br>
+<!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> -->
+<form action="edit.php" method ="post"></form>
+   ID : <input type = "text" name="id" value ="<?php echo $bdid?>"> <br><br>
+   First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"><br><br>
    Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"><br><br>
    Email: <input type="email" name="email" value="<?php echo $email; ?>"><br><br>
    Phone: <input type="text" name="phone" value="<?php echo $phone; ?>"><br><br>

@@ -1,0 +1,30 @@
+h2 {
+    text-align: center;
+    font-size: 3rem;
+}
+
+a{
+    text-decoration: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+}
+body{
+    background-color: rgb(231, 227, 221);
+}
+p{
+    text-align: center;
+    color: rgb(27, 34, 66);
+}
+
+.form-container {
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    
+}
+
+.form-input {
+    background-color: aquamarine;
+}
+
