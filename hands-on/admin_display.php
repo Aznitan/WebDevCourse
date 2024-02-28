@@ -26,7 +26,7 @@
                 <td> Edit</td>
                 <td> Delete</td>
                 <td>First Name</td>
-                <td>Lasst Name</td>
+                <td>Lasst Name</td> 
                 <td>Email</td>
                 <td>Phone</td>
                 <td>Major</td>
@@ -53,6 +53,13 @@
 
     echo "</table>";
     ?>
+
+
+
+
+
+
+
 </body>
 
 </html>

@@ -8,12 +8,12 @@
     </head>
     <body>
         <p>
-            <a href="general_userhome.php">Home</a>&nbsp;|&nbsp;
-            <a href="user_profile.php">About</a>&nbsp;|&nbsp;
-            <a href="lab3.php">Login</a>&nbsp;|&nbsp;
-            <a href="lab3-2.php">Sign Up</a>&nbsp;|&nbsp;
-            <a href="htmlcssquiz.php">Forum</a>&nbsp;|&nbsp;
-            <a href="javascriptquiz.php">Contact</a>&nbsp;|&nbsp;
+            <a href="home.php">Home</a>&nbsp;|&nbsp;
+            <a href="about.php">About</a>&nbsp;|&nbsp;
+            <a href="login.php">Login</a>&nbsp;|&nbsp;
+            <a href="registration.php">Sign Up</a>&nbsp;|&nbsp;
+            <a href="forum.php">Forum</a>&nbsp;|&nbsp;
+            <a href="contact.php">Contact</a>&nbsp;|&nbsp;
         </p>
 
     </body>
