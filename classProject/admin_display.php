@@ -3,9 +3,10 @@
 <head>
     <title>Online Test - Admin Home</title>
     <style>
-        p {
-            align-items: center;
-        }
+          p,h2{
+                text-align: center;
+                padding-top: 5rem;
+            }
     </style>
 </head>
 
@@ -53,6 +54,7 @@
 
     echo "</table>";
     ?>
+
 </body>
 
 </html>

@@ -2,10 +2,24 @@
 
 <head>
     <title>Online Test - Admin Delete</title>
-    
+    <style>
+         p,h2{
+                text-align: center;
+                padding-top: 3rem;
+            }
+            body {
+                text-align: center;
+            }
+            form {
+                display: inline-block;
+                text-align: center;
+            }
+    </style>
 </head>
 
 <body>
+<h2>Welcome to the Admin Delete Page</h2>
+    <p>Submited by Luis Fabela</p>
     <?php
     $id=$firstname=$lastname=$email=$bdid="";
     
@@ -29,6 +43,7 @@
     if($numrows== 1){
         $row=mysqli_fetch_array($result);    
         $id=$row["id"];
+        $dbid =$id;
         $firstname=$row["firstname"]; 
         $lastname=$row["lastname"]; 
         $email=$row["email"]; 
@@ -40,13 +55,12 @@
 
 
 
-    <h2>Welcome to the Admin Delete Page</h2>
-    <p>Submited by Luis Fabela</p>
+    
     <hr>
     <h4>Are you sure you want to delete this user?</h4>
 
-    <form action="delete.php" method="post"></form>
-    ID : <input type="text" name="id" value="<?php echo $bdid ?>"> <br><br>
+    <form action="delete.php" method="post">
+    ID : <input type="text" name="id" value="<?php echo $dbid ?>"> <br><br>
     First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"><br><br>
     Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"><br><br>
     Email: <input type="email" name="email" value="<?php echo $email; ?>"><br><br>

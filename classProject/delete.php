@@ -9,6 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 $qs="DELETE FROM users WHERE id=$id";
 mysqli_query($dbc, $qs);
-echo"This user with email".$email." has been deleted!";
+echo"This user with email".$newemail." has been deleted!";
 echo "<br> Please <a href='admin_display.php'>click here</a> to go back. <br>";
 ?>

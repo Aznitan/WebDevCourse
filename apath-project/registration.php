@@ -57,13 +57,13 @@
      if ($flag == 0) {
       include "connection.php";
       // check email to make sure is NOT in our DB table 
-      $sqs = "SELECT * from registration WHERE email = '$email' ";
+      $sqs = "SELECT * from apathregistration WHERE email = '$email' ";
       $qresult = mysqli_query($dbc, $sqs);
       $num = mysqli_num_rows($qresult);
       if ($num != 0) {
           echo "<br><h3>Email has been used! Please Try a different email</h3></br>";
       } else {
-          $sqs = "INSERT INTO apathusers(email, passw) VALUES('$email','$passw' )";
+          $sqs = "INSERT INTO apath(email, passw) VALUES('$email','$passw' )";
           mysqli_query($dbc, $sqs);
           $registerd = mysqli_affected_rows($dbc);
           echo $registerd . " resgistration is successful <br>";

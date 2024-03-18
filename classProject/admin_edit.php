@@ -3,9 +3,17 @@
 <head>
     <title>Online Test - Admin Edit</title>
     <style>
-        p {
-            align-items: center;
-        }
+         p,h2{
+                text-align: center;
+                padding-top: 4rem;
+            }
+            body {
+                text-align: center;
+            }
+            form {
+                display: inline-block;
+                text-align: center;
+            }
     </style>
 </head>
 
@@ -14,7 +22,7 @@
 
 <?php
     include("admin_navbar.php");
-    $id = $_GET['id'];
+    $id = $_GET['id']; 
     echo "id of this user is ".$id."<br>";
 
     // retrive user information based on the id
@@ -28,6 +36,8 @@
     $numrows = mysqli_num_rows($result);
     if($numrows== 1){
         $row=mysqli_fetch_array($result);    
+        $id=$row["id"];
+        $dbid =$id;
         $firstname=$row["firstname"]; 
         $lastname=$row["lastname"]; 
         $email=$row["email"]; 
@@ -45,8 +55,8 @@
 
 
 <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> -->
-<form action="edit.php" method ="post"></form>
-   ID : <input type = "text" name="id" value ="<?php echo $bdid?>"> <br><br>
+<form action="edit.php" method ="post">
+   ID : <input type = "text" name="id" value ="<?php echo $dbid?>"> <br><br>
    First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"><br><br>
    Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"><br><br>
    Email: <input type="email" name="email" value="<?php echo $email; ?>"><br><br>

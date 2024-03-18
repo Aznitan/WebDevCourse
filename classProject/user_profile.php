@@ -3,14 +3,14 @@ session_start();
 $id = $_SESSION["id"];
 echo "session id is " . $id . "<br>"; // for developers
 include "connection.php";
-$qs = "SELECT * FROM users WHERE id = $id";
+$qs = "SELECT * FROM users WHERE id = '$id'";
 // echo query statement
 
 $result = mysqli_query($dbc, $qs);
 $numrows = mysqli_num_rows($result);
 if ($numrows == 1) {
     $row = mysqli_fetch_array($result);
-    $bdid=$row["id"];
+    $dbid=$row["id"];
     $firstname = $row["firstname"];
     $lastname = $row["lastname"];
     $email = $row["email"];
@@ -128,9 +128,17 @@ include "input_test.php";
 <head>
     <title>Online Test - User Profile</title>
     <style>
-        p {
-            align-items: center;
-        }
+          p,h2{
+                text-align: center;
+                padding-top: 3rem;
+            }
+            body {
+                text-align: center;
+            }
+            form {
+                display: inline-block;
+                text-align: center;
+            }
     </style>
 </head>
 
@@ -143,7 +151,7 @@ include "input_test.php";
 
     
 <form action="user_profile.php" method ="post">
-   ID : <input type = "text" name="id" value ="<?php echo $bdid?>"> <br><br>
+   ID : <input type = "text" name="id" value ="<?php echo $dbid?>"> <br><br>
    First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"><br><br>
    Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"><br><br>
    Email: <input type="email" name="email" value="<?php echo $email; ?>"><br><br>

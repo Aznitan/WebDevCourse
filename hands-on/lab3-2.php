@@ -137,7 +137,7 @@
                 <?php echo $nameErr; ?>
             </span>
             <br><br>
-
+ 
             1. What SQL keyword is used to retrieve data from a database? <span class="error">
                 <?php echo $Q1Err; ?>
             </span><br>

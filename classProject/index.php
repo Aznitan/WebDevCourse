@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <html>
 
@@ -9,6 +10,17 @@ session_start();
         .error {
             color: #FF0000
         }
+        p,h2{
+                text-align: center;
+                padding-top: 3rem;
+            }
+            body {
+                text-align: center;
+            }
+            form {
+                display: inline-block;
+                text-align: center;
+            }
     </style>
 </head>
 
@@ -40,17 +52,20 @@ session_start();
             $dblastname = $row["lastname"];
             $dbpw = $row["pw"];
             $user_type = $row["user_type"];
-            $bdid=$row["id"];
+            $dbid=$row["id"];
             $_SESSION["id"] = $dbid;
             
             if ($pw == $dbpw) {
                 echo "Welcome to our website, " . $dbfirstname . "<br>";
                 mysqli_close($dbc);
                 if($user_type == 0){
-                    header("Location: admin_home.php");
+                    // header("Location: admin_home.php");
+                    echo "<script> window.location.href='admin_home.php';</script>";
+
                 }
                 else{
-                header("Location: user_home.php");
+                // header("Location: user_home.php");
+                echo "<script> window.location.href='user_home.php';</script>";
                 }
 
             } else {

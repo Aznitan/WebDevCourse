@@ -6,6 +6,16 @@
         .error {
             color: #FF0000
         }
+        p,h2{
+                text-align: center;
+                padding-top: 3rem;
+            }
+            body {
+                text-align: center;
+            }
+            form {
+                display: inline-block;
+            }
     </style>
 </head>
 
@@ -116,7 +126,8 @@
     }
 
     ?>
-
+        <p>Have an account? </p>
+        <a href="index.php"><input type="button" value="Login"></a><br><br>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"> <span class="error">*
             <?php echo $firstnameErr; ?>
@@ -156,6 +167,8 @@
         </span>
         <br><br>
         <input type="submit">
+        &nbsp;<br><br>
+        
 
     </form>
 
