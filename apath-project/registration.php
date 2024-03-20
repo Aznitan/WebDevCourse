@@ -90,7 +90,7 @@
           echo "checked" ?>
             value="volunteer"> I am signing up as a volunteer
             <br>
-          <input type="radio" name="gtech" <?php if (isset($gtech) && $gtech == "gtech")
+        <input type="radio" name="gtech" <?php if (isset($gtech) && $gtech == "gtech")
           echo "checked" ?>
             value="gtech">I am an international students that need help
 
