@@ -16,9 +16,9 @@
 
   <br>
   <p>
-    I’m an international students that need help;
+    We are going to communicate with you using email often.
     <br>
-    also, I recommend a confirm pw field
+    Please create your new account with your most frequently used email.
   </p>
   <?php
   function test_input($data)
@@ -33,23 +33,22 @@
   $passw = "Password";
   $passw2 = "Password";
   $flag = 0;
-  $volunteer="";
-  $gtech="";
+  $useerType="";
   $flag= 0;
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = test_input($_POST["email"]);
-    if (isset($_POST['gtech'])) {
-      $gtech = $_POST['gtech'];
+    if (isset($_POST['useerType'])) {
+      $useerType = $_POST['useerType'];
      }
-     $passw = test_input($_POST["password1"]);
-     $passw2 = test_input($_POST["password2"]);
+     $passw = test_input($_POST["passw"]);
+     $passw2 = test_input($_POST["passw1"]);
 
      if ($passw == "") {
-         $flag = 7;
+         $flag = 1;
      } else {
          if ($passw != $passw2) {
-             $flag = 8;
+             $flag = 2;
          }
      }
 
@@ -57,18 +56,18 @@
      if ($flag == 0) {
       include "connection.php";
       // check email to make sure is NOT in our DB table 
-      $sqs = "SELECT * from apathregistration WHERE email = '$email' ";
+      $sqs = "SELECT * from apath WHERE email = '$email' ";
       $qresult = mysqli_query($dbc, $sqs);
       $num = mysqli_num_rows($qresult);
       if ($num != 0) {
           echo "<br><h3>Email has been used! Please Try a different email</h3></br>";
       } else {
-          $sqs = "INSERT INTO apath(email, passw) VALUES('$email','$passw' )";
+          $sqs = "INSERT INTO apath(email, pw,usertype ) VALUES('$email','$passw','$useerType' )";
           mysqli_query($dbc, $sqs);
           $registerd = mysqli_affected_rows($dbc);
           echo $registerd . " resgistration is successful <br>";
           mysqli_close($dbc);
-          header("Location: registrationsuccessful.php");
+          header("Location: registration.php");
 
       }
   }
@@ -79,26 +78,29 @@
   ?>
 
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-container">
-    <input type="email" name="email" value="<?php echo $email; ?>"><span class="error">
+      <input type="email" name="email" value="<?php echo $email; ?>"><span class="error">
       <br><br>
       <input type="password" name="passw" value="<?php echo $passw; ?>"> <span class="error">
         <br><br>
         <input type="password" name="passw1" value="<?php echo $passw; ?>"><span class="error">
         <br><br>
         
-        <input type="radio" name="volunteer" <?php if (isset($volunteer) && $volunteer == "volunteer")
+        <input type="radio" name="useerType" <?php if (isset($useerType) && $useerType == 1)
           echo "checked" ?>
-            value="volunteer"> I am signing up as a volunteer
-            <br>
-        <input type="radio" name="gtech" <?php if (isset($gtech) && $gtech == "gtech")
+            value=1> I am signing up as a volunteer
+      <br>
+          <input type="radio" name="useerType" <?php if (isset($useerType) && $useerType == 2)
           echo "checked" ?>
-            value="gtech">I am an international students that need help
-
+            value=2>I’m an international students that need help
+            
+      
 
           <br><br>
           <input type="submit">
     </form>
 
+    <br>
+    <p>Already Have an Account?<a href="index.php">Login</a></p>
 
 
 
