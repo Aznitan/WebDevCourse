@@ -128,6 +128,7 @@
     ?>
         <p>Have an account? </p>
         <a href="index.php"><input type="button" value="Login"></a><br><br>
+
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"> <span class="error">*
             <?php echo $firstnameErr; ?>
