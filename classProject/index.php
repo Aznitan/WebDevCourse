@@ -54,6 +54,7 @@ session_start();
             $user_type = $row["user_type"];
             $dbid=$row["id"];
             $_SESSION["id"] = $dbid;
+            $_SESSION["firstname"] = $dbfirstname;
             
             if ($pw == $dbpw) {
                 echo "Welcome to our website, " . $dbfirstname . "<br>";

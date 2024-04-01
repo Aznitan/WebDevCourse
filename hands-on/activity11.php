@@ -8,7 +8,7 @@
         }
     </style>
 </head>
-<body>
+<body> 
     <h1>Uploading Files to Server</h1>
     <p>Submited by Luis Fabela</p>
 

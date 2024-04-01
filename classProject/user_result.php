@@ -54,11 +54,15 @@ echo "session id is " . $id . "<br>"; // for developers
     $numrows = mysqli_num_rows($qresult);
     if ($numrows == 1) {
         $row = mysqli_fetch_array($qresult);
+        $html = $row["quiz1"]; // make sure you match with your database
+        $quiz2= $row["quiz2"];
+        $quiz3= $row["quiz3"];
+        $quiz4= $row["quiz4"];
         echo "<br><table>";
         echo "<tr>";
         echo "<td> Name:" . $row["firstname"] . " " . $row["lastname"];
         echo "</td>";
-        echo "<td> PHP result:" . $row["quiz1"];
+        echo "<td> PHP result:" .$html."/100";
         echo "</td>";
         echo "</tr>";
         echo "</table><br>";
@@ -67,7 +71,7 @@ echo "session id is " . $id . "<br>"; // for developers
         echo "<tr>";
         echo "<td> Name:" . $row["firstname"] . " " . $row["lastname"];
         echo "</td>";
-        echo "<td> SQL result:" . $row["quiz2"];
+        echo "<td> SQL result:" .$quiz2 ."/100";
         echo "</td>";
         echo "</tr>";
         echo "</table><br>";
@@ -76,7 +80,7 @@ echo "session id is " . $id . "<br>"; // for developers
         echo "<tr>";
         echo "<td> Name:" . $row["firstname"] . " " . $row["lastname"];
         echo "</td>";
-        echo "<td> HTML/CSS result:" . $row["quiz3"];
+        echo "<td> HTML/CSS result:" . $quiz3."/100";
         echo "</td>";
         echo "</tr>";
         echo "</table><br>";
@@ -85,10 +89,25 @@ echo "session id is " . $id . "<br>"; // for developers
         echo "<tr>";
         echo "<td> Name:" . $row["firstname"] . " " . $row["lastname"];
         echo "</td>";
-        echo "<td> JavaScript result:" . $row["quiz4"];
+        echo "<td> JavaScript result:" . $quiz4."/100";
         echo "</td>";
         echo "</tr>";
         echo "</table><br>";
+
+        // $average= $html/4// all the grades  / 4 
+        // if ($average>=90){
+        //     $msg = "Your overall skill level in Web Dev is Excellent. <br>
+        //     I would recommend you to browse the available positions on our website and start to work"
+        //     ;
+        // }elseif ($average >=80){
+        //     $msg= "your overall skill in Web Dev is Ok.";
+        // }
+        // elseif ($average >=70){
+        //     $msg= "your overall skill in Web Dev could be inproved.";
+        // }
+        // else{
+        //     $msg = "YOu are a begginner at Web Dev. We recommend you to continue Learning using the Training resources."
+        // }
 
     }
 
