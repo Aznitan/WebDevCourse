@@ -27,20 +27,21 @@ if(isset($_SESSION["id"])) {
   <?php
    include "input_test.php";
 
-    $firstname = $lastname = $englishname = $gender = $family = $student_type = $purpose = $email = $phone = $erchat_id = $covid = $username = $password = $confirm_password = $special_attention = $comments = "";
-    $firstnameErr = $lastnameErr =$englishnameErr= $genderErr = $emailErr = $phoneErr = $passwordErr = $confirm_passwordErr = "";
+    $firstname = $lastname = $englishname = $gender = $family = $student_type = $purpose =$major= $email = $phone = $WeChat_id = $covid = $username = $password = $confirm_password = $special_attention = $comments = "";
+    $firstnameErr = $lastnameErr =$englishnameErr= $genderErr = $majorErr=$emailErr = $phoneErr = $passwordErr = $confirm_passwordErr = "";
     $flag = 0;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $firstname = test_input($_POST["first_name"]);
-        $lastname = test_input($_POST["last_name"]);
-        $english_name = test_input($_POST["english_name"]);
+        $firstname = test_input($_POST["firstname"]);
+        $lastname = test_input($_POST["lastname"]);
+        $englishname = test_input($_POST["englishname"]);
         $gender = test_input($_POST["gender"]);
         $family = test_input($_POST["family"]);
         $student_type = test_input($_POST["student_type"]);
         $purpose = test_input($_POST["purpose"]);
+        $major = test_input($_POST["major"]);
         $email = test_input($_POST["email"]);
         $phone = test_input($_POST["phone"]);
-        $erchat_id = test_input($_POST["erchat_id"]);
+        $WeChat_id = test_input($_POST["WeChat_id"]);
         $covid = test_input($_POST["covid"]);
         $username = test_input($_POST["username"]);
         $password = test_input($_POST["password"]);
@@ -88,19 +89,21 @@ if(isset($_SESSION["id"])) {
         // If all validations pass, proceed to database operation
         if ($flag == 0) {
             include "connection.php";
-            // check email to make sure is NOT in our DB table 
-            $sqs = "SELECT * from registration WHERE email = '$email' ";
+            
+            $sqs = "SELECT * from apath WHERE email = '$email' ";
             $qresult = mysqli_query($dbc, $sqs);
             $num = mysqli_num_rows($qresult);
-            if ($num != 0) {
-                echo "<br><h3>Email has been used! Please Try a different email</h3></br>";
+            if ($num == 0) {
+                echo "<br><h3>User Profile already filled up</h3></br>".$flag;
             } else {
-                $sqs = "INSERT INTO users(firstname, lastname, email, phone, major, gender, pw) VALUES('$firstname','$lastname','$email','$phone','$major','$gender','$password1' )";
+                $sqs = "INSERT INTO student(s_id,firstname, lastname,gender,bfamily,stype,pvisit,major, email, phone, wechat_ID,hcovid,sattention,comments) 
+                VALUES('$id','$firstname','$lastname','$gender','$family','$student_type','$purpose','$major','$email','$phone','$WeChat_id','$covid','$special_attention','$comments')";
                 mysqli_query($dbc, $sqs);
                 $registerd = mysqli_affected_rows($dbc);
-                echo $registerd . " resgistration is successful <br>";
+                echo $registerd . " Personal Profile updated successfully <br>";
                 mysqli_close($dbc);
-                header("Location: registrationsuccessful.php");
+                //header("Location: student_profile.php");
+                 echo "<script> window.location.href='student_profile.php';</script>";
 
             }
         }
@@ -115,7 +118,7 @@ if(isset($_SESSION["id"])) {
     Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"> <span class="error">*
             <?php echo $lastnameErr; ?></span><br><br>
 
-    English Name (if any): <input type="text" name="english_name" value="<?php echo $englishname; ?>"> <span class="error">*
+    English Name (if any): <input type="text" name="englishname" value="<?php echo $englishname; ?>"> <span class="error">*
             <?php echo $englishnameErr; ?></span><br><br>
 
     <!-- Gender -->
@@ -149,11 +152,13 @@ if(isset($_SESSION["id"])) {
     <br><br>
 
     <!-- Contact Information -->
+    Major <input type="text" name="major" value="<?php echo isset($major) ? htmlspecialchars($major) : ''; ?>"><br><br>
+
     E-mail: <input type="email" name="email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"><br><br>
 
     Phone: <input type="tel" name="phone" value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>"><br><br>
 
-    Erchat ID: <input type="text" name="erchat_id" value="<?php echo isset($erchat_id) ? htmlspecialchars($erchat_id) : ''; ?>"><br><br>
+    WeChat ID: <input type="text" name="WeChat_id" value="<?php echo isset($WeChat_id) ? htmlspecialchars($WeChat_id) : ''; ?>"><br><br>
 
     <!-- COVID-19 -->
     Had COVID-19:
