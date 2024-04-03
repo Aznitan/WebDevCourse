@@ -6,16 +6,20 @@
         .error {
             color: #FF0000
         }
-        p,h2{
-                text-align: center;
-                padding-top: 3rem;
-            }
-            body {
-                text-align: center;
-            }
-            form {
-                display: inline-block;
-            }
+
+        p,
+        h2 {
+            text-align: center;
+            padding-top: 3rem;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        form {
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -109,16 +113,20 @@
             $sqs = "SELECT * from registration WHERE email = '$email' ";
             $qresult = mysqli_query($dbc, $sqs);
             $num = mysqli_num_rows($qresult);
+            //on April 2 2024 hash on pass for more security
+            $pwhash = password_hash($password1, PASSWORD_DEFAULT);
+            $verify = password_verify($password1, $pwhash);
             if ($num != 0) {
                 echo "<br><h3>Email has been used! Please Try a different email</h3></br>";
             } else {
-                $sqs = "INSERT INTO users(firstname, lastname, email, phone, major, gender, pw) VALUES('$firstname','$lastname','$email','$phone','$major','$gender','$password1' )";
-                mysqli_query($dbc, $sqs);
-                $registerd = mysqli_affected_rows($dbc);
-                echo $registerd . " resgistration is successful <br>";
-                mysqli_close($dbc);
-                header("Location: registrationsuccessful.php");
-
+                if ($verify) {
+                    $sqs = "INSERT INTO users(firstname, lastname, email, phone, major, gender, pw) VALUES('$firstname','$lastname','$email','$phone','$major','$gender','$password1' )";
+                    mysqli_query($dbc, $sqs);
+                    $registerd = mysqli_affected_rows($dbc);
+                    echo $registerd . " resgistration is successful <br>";
+                    mysqli_close($dbc);
+                    header("Location: registrationsuccessful.php");
+                }
             }
         }
 
@@ -126,8 +134,8 @@
     }
 
     ?>
-        <p>Have an account? </p>
-        <a href="index.php"><input type="button" value="Login"></a><br><br>
+    <p>Have an account? </p>
+    <a href="index.php"><input type="button" value="Login"></a><br><br>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"> <span class="error">*
@@ -164,12 +172,12 @@
         </span>
         <br><br>
         Confirm Password: <input type="password" name="password2" value="<?php echo $password2 ?>"><span class="error">*
-            <?php echo $password2Err; ?> 1-15 characters        
+            <?php echo $password2Err; ?> 1-15 characters
         </span>
         <br><br>
         <input type="submit">
         &nbsp;<br><br>
-        
+
 
     </form>
 

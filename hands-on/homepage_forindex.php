@@ -1,7 +1,4 @@
-<?php
-session_start();
-
-?>
+<!-- chage back the name as index.php to make this page work  -->
 <html>
 
 <head>
@@ -10,17 +7,6 @@ session_start();
         .error {
             color: #FF0000
         }
-        p,h2{
-                text-align: center;
-                padding-top: 3rem;
-            }
-            body {
-                text-align: center;
-            }
-            form {
-                display: inline-block;
-                text-align: center;
-            }
     </style>
 </head>
 
@@ -51,27 +37,9 @@ session_start();
             $dbfirstname = $row["firstname"];
             $dblastname = $row["lastname"];
             $dbpw = $row["pw"];
-            $user_type = $row["user_type"];
-            $dbid=$row["id"];
-            $_SESSION["id"] = $dbid;
-            $_SESSION["firstname"] = $dbfirstname;
-            //on April 2 2024 hash on pass for more security
-            $pwhash = password_hash($pw,PASSWORD_DEFAULT);
-            $dbpwhash = password_hash($dbpw,PASSWORD_DEFAULT);
-            // before if ($pw == $dbpw)
-            $verify = password_verify($pw,$pwhash);
-            if ($verify ) {
+            if ($pw == $dbpw) {
                 echo "Welcome to our website, " . $dbfirstname . "<br>";
-                mysqli_close($dbc);
-                if($user_type == 0){
-                    // header("Location: admin_home.php");
-                    echo "<script> window.location.href='admin_home.php';</script>";
-
-                }
-                else{
-                // header("Location: user_home.php");
-                echo "<script> window.location.href='user_home.php';</script>";
-                }
+                header("Location: user_navbar.php");
 
             } else {
                 echo "Sorry your Password is not correct! Please Try Again...";
