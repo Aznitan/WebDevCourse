@@ -2,7 +2,7 @@
 session_start();
 $id = $_SESSION["id"];
 
-if(isset($_SESSION["id"])) {
+if (isset($_SESSION["id"])) {
     $id = $_SESSION["id"];
     echo "Session ID is " . $id . "<br>"; // For developers
 } else {
@@ -11,53 +11,51 @@ if(isset($_SESSION["id"])) {
 }
 ?>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css">
-    <title>Document</title>
+    <title>Profile</title>
 </head>
-<body>
-<br>
-  <h2>APATH</h2>
-  <?php
-  include("volunteernav.php");
-  
-  ?>
-  <?php
-   include "input_test.php";
 
-    $firstname = $lastname = $englishname = $gender = $family = $student_type = $purpose = $email = $phone = $erchat_id = $covid = $username = $password = $confirm_password = $special_attention = $comments = "";
-    $firstnameErr = $lastnameErr =$englishnameErr= $genderErr = $emailErr = $phoneErr = $passwordErr = $confirm_passwordErr = "";
+<body>
+    <br>
+    <h2>APATH - Profile Information</h2>
+    <?php
+    include ("volunteernav.php");
+
+    ?>
+    <?php
+    include "input_test.php";
+
+    $firstname = $lastname = $englishname = $gender = $affirec = $phone2 = $email = $phone = $erchat_id = $covid = $username = $password11 = $confirm_password =  "";
+    $firstnameErr = $lastnameErr = $englishnameErr = $genderErr = $emailErr = $phoneErr = $passwordErr = $confirm_passwordErr = "";
     $flag = 0;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $firstname = test_input($_POST["first_name"]);
         $lastname = test_input($_POST["last_name"]);
-        $english_name = test_input($_POST["english_name"]);
         $gender = test_input($_POST["gender"]);
-        $family = test_input($_POST["family"]);
-        $student_type = test_input($_POST["student_type"]);
-        $purpose = test_input($_POST["purpose"]);
+        $affirec = test_input($_POST["affre"]);
         $email = test_input($_POST["email"]);
         $phone = test_input($_POST["phone"]);
+        $phone2 = test_input($_POST["phone2"]);
         $erchat_id = test_input($_POST["erchat_id"]);
         $covid = test_input($_POST["covid"]);
         $username = test_input($_POST["username"]);
-        $password = test_input($_POST["password"]);
+        $password11 = test_input($_POST["password1"]);
         $confirm_password = test_input($_POST["confirm_password"]);
-        $special_attention = test_input($_POST["special_attention"]);
-        $comments = test_input($_POST["comments"]);
 
         // Validations (add your validations here)
-        
-        if ($firstname == "" || $firstname == "firsname") {
+    
+        if ($firstname == "") {
             $firstnameErr = "First Name is required!";
             $flag = 1;
         } else {
             echo "Welcome " . $firstname;
         }
 
-        if ($lastname == "" || $lastname == "lastname") {
+        if ($lastname == "") {
             $lastnameErr = "Last name is required";
             $flag = 2;
         }
@@ -77,109 +75,118 @@ if(isset($_SESSION["id"])) {
             $flag = 4;
         }
 
-        if (empty($password)) {
+        if (empty($password11)) {
             $passwordErr = "Password is required";
+            $flag = 5;
         }
 
-        if ($password != $confirm_password) {
+        if ($password11 != $confirm_password) {
             $confirm_passwordErr = "Passwords do not match";
+            $flag = 6;
         }
 
         // If all validations pass, proceed to database operation
         if ($flag == 0) {
             include "connection.php";
-            // check email to make sure is NOT in our DB table 
-            $sqs = "SELECT * from registration WHERE email = '$email' ";
-            $qresult = mysqli_query($dbc, $sqs);
-            $num = mysqli_num_rows($qresult);
-            if ($num != 0) {
-                echo "<br><h3>Email has been used! Please Try a different email</h3></br>";
-            } else {
-                $sqs = "INSERT INTO users(firstname, lastname, email, phone, major, gender, pw) VALUES('$firstname','$lastname','$email','$phone','$major','$gender','$password1' )";
-                mysqli_query($dbc, $sqs);
-                $registerd = mysqli_affected_rows($dbc);
-                echo $registerd . " resgistration is successful <br>";
-                mysqli_close($dbc);
-                header("Location: registrationsuccessful.php");
+            // Check if the v_id needs to be inserted
+            $selectVIdQuery = "SELECT COUNT(*) as count FROM volunteer WHERE v_id = '$id'";
+            $result = mysqli_query($dbc, $selectVIdQuery);
+            $row = mysqli_fetch_assoc($result);
+            $count = $row['count'];
 
+            if ($count == 0) {
+                // v_id doesn't exist, so insert it
+                $insertVIdQuery = "INSERT INTO volunteer (v_id) VALUES ('$id')";
+                mysqli_query($dbc, $insertVIdQuery);
             }
+
+
+            $qs = "UPDATE apath SET pw='$password11' 
+            WHERE id='$id' ";
+            $sqs = "UPDATE volunteer 
+            SET first_name='$firstname', last_name='$lastname', 
+                gender='$gender', affiliation='$affirec', email='$email', 
+                phone='$phone', backphone='$phone2', wid='$erchat_id', 
+                covid='$covid', username='$username'
+            WHERE v_id='$id'";
+            //run the query 
+            mysqli_query($dbc, $qs);
+            echo $sqs;
+            mysqli_query($dbc, $sqs);
+            if (mysqli_affected_rows($dbc) == 1) {
+                echo "Volunteer information updated successfully!";
+                mysqli_close($dbc);
+                echo "<script> window.location.href='v_profile.php';</script>";
+            } else {
+                echo "Something is Wrong!" . mysqli_error($dbc);
+            }
+
+
+        } else {
+            echo "error is: " . $flag;
         }
     }
-?>
+    ?>
 
 
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-container">
-    <!-- Personal Information -->
-    First Name: <input type="text" name="firstname" value="<?php echo $firstname; ?>"> <span class="error">*
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-container">
+        <!-- Personal Information -->
+        First Name: <input type="text" name="first_name"
+            value="<?php echo isset($firstname) ? htmlspecialchars($firstname) : ''; ?>"> <span class="error">*
             <?php echo $firstnameErr; ?></span><br><br>
-    Last Name: <input type="text" name="lastname" value="<?php echo $lastname; ?>"> <span class="error">*
+        Last Name: <input type="text" name="last_name"
+            value="<?php echo isset($lastname) ? htmlspecialchars($lastname) : ''; ?>"> <span class="error">*
             <?php echo $lastnameErr; ?></span><br><br>
 
-    English Name (if any): <input type="text" name="english_name" value="<?php echo $englishname; ?>"> <span class="error">*
-            <?php echo $englishnameErr; ?></span><br><br>
+        <!-- Gender -->
+        Gender:
+        <span class="error">* <?php echo $genderErr; ?></span>
+        <input type="radio" name="gender" <?php if (isset($gender) && $gender == "female")
+            echo "checked" ?>
+                value="female">Female
+            <input type="radio" name="gender" <?php if (isset($gender) && $gender == "male")
+            echo "checked" ?>
+                value="male">Male
+            <input type="radio" name="gender" <?php if (isset($gender) && $gender == "other")
+            echo "checked" ?>
+                value="other">Other
+            <br><br>
+            Affiliation/Recommended by: <input type="text" name="affre"
+                value="<?php echo isset($affirec) ? htmlspecialchars($affirec) : ''; ?>"><br><br>
+        <!-- Contact Information -->
+        E-mail: <input type="email" name="email"
+            value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"><br><br>
 
-    <!-- Gender -->
-    Gender: 
-    <span class="error">* <?php echo $genderErr; ?></span><br>
-    <input type="radio" name="gender" <?php if (isset($gender) && $gender == "female") echo "checked" ?> value="female">Female
-    <input type="radio" name="gender" <?php if (isset($gender) && $gender == "male") echo "checked" ?> value="male">Male
-    <input type="radio" name="gender" <?php if (isset($gender) && $gender == "other") echo "checked" ?> value="other">Other
-    <br><br>
+        Cellphone: <input type="tel" name="phone"
+            value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>"><br><br>
 
-    <!-- Family and Student Type -->
-    Bringing Family:
-    <input type="radio" name="family" <?php if (isset($family) && $family == "yes") echo "checked" ?> value="yes">Yes
-    <input type="radio" name="family" <?php if (isset($family) && $family == "no") echo "checked" ?> value="no">No
-    <br><br>
+        Back phone number to contact you: <input type="tel" name="phone2"
+            value="<?php echo isset($phone2) ? htmlspecialchars($phone2) : ''; ?>"><br><br>
+        Wechat ID: <input type="text" name="erchat_id"
+            value="<?php echo isset($erchat_id) ? htmlspecialchars($erchat_id) : ''; ?>"><br><br>
 
-    Student Type:
-    <input type="radio" name="student_type" <?php if (isset($student_type) && $student_type == "return") echo "checked" ?> value="return">Returning Student
-    <input type="radio" name="student_type" <?php if (isset($student_type) && $student_type == "first_time") echo "checked" ?> value="first_time">First-Time Student
-    <br><br>
+        <!-- COVID-19 -->
+        Did you already get COVID vaccine?
+        <input type="radio" name="covid" <?php if (isset($covid) && $covid == "yes")
+            echo "checked" ?> value="yes">Yes
+            <input type="radio" name="covid" <?php if (isset($covid) && $covid == "no")
+            echo "checked" ?> value="no">No
+            <br><br>
 
-    <!-- Purpose of Visit -->
-    Purpose of Visit:
-    <select name="purpose">
-        <option value="select">-- Select --</option>
-        <option value="undergraduate" <?php if (isset($purpose) && $purpose == "undergraduate") echo "selected" ?>>Undergraduate</option>
-        <option value="graduate" <?php if (isset($purpose) && $purpose == "graduate") echo "selected" ?>>Graduate</option>
-        <option value="visiting_scholar" <?php if (isset($purpose) && $purpose == "visiting_scholar") echo "selected" ?>>Visiting Scholar</option>
-        <option value="other" <?php if (isset($purpose) && $purpose == "other") echo "selected" ?>>Other</option>
-    </select>
-    <br><br>
+            <!-- Account Information -->
+            Choose a Username: <input type="text" name="username"
+                value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>"><br><br>
 
-    <!-- Contact Information -->
-    E-mail: <input type="email" name="email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"><br><br>
+        Password: <input type="password" name="password1"
+            value="<?php echo isset($password11) ? htmlspecialchars($password11) : ''; ?>"><br><br>
 
-    Phone: <input type="tel" name="phone" value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>"><br><br>
+        Confirm Password: <input type="password" name="confirm_password"
+            value="<?php echo isset($confirm_password) ? htmlspecialchars($confirm_password) : ''; ?>"><br><br>
 
-    Erchat ID: <input type="text" name="erchat_id" value="<?php echo isset($erchat_id) ? htmlspecialchars($erchat_id) : ''; ?>"><br><br>
+        <input type="submit" value="Submit">
+    </form>
 
-    <!-- COVID-19 -->
-    Had COVID-19:
-    <input type="radio" name="covid" <?php if (isset($covid) && $covid == "yes") echo "checked" ?> value="yes">Yes
-    <input type="radio" name="covid" <?php if (isset($covid) && $covid == "no") echo "checked" ?> value="no">No
-    <br><br>
 
-    <!-- Account Information -->
-    Choose a Username: <input type="text" name="username" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>"><br><br>
-
-    Password: <input type="password" name="password" value="<?php echo isset($password) ? htmlspecialchars($password) : ''; ?>"><br><br>
-
-    Confirm Password: <input type="password" name="confirm_password" value="<?php echo isset($confirm_password) ? htmlspecialchars($confirm_password) : ''; ?>"><br><br>
-
-    <!-- Special Attention -->
-    Special Attention Needed:
-    <input type="radio" name="special_attention" <?php if (isset($special_attention) && $special_attention == "yes") echo "checked" ?> value="yes">Yes
-    <input type="radio" name="special_attention" <?php if (isset($special_attention) && $special_attention == "no") echo "checked" ?> value="no">No
-    <br><br>
-
-    <!-- Comments -->
-    Comments: <textarea name="comments" rows="4" cols="50"><?php echo isset($comments) ? htmlspecialchars($comments) : ''; ?></textarea><br><br>
-
-    <input type="submit" value="Submit">
-</form>
-
-    
 </body>
+
 </html>

@@ -21,10 +21,10 @@ if(isset($_SESSION["id"])) {
   ?>
 </head>
 <body>
-    
+<br>
+    <br>
     <p>Welcome to Atlanta,GA</p>
-    <br>
-    <br>
+   
     <p>Please complete your personal profile</p>
     <br>
     <p>If you would like to volunteer for airport pickup. please provide your car info</p>
