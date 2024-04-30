@@ -11,6 +11,7 @@
             <a href="v_house.php">House Infor</a>&nbsp;|&nbsp;
             <a href="v_pick.php">Pickup Assingment</a>&nbsp;|&nbsp;
             <a href="v_temp.php">Temp Housing Assingment</a>&nbsp;|&nbsp;
+            <a href="p_needs.php">Check Pickup Needs</a>&nbsp;|&nbsp;
             <a href="index.php">Logout</a>&nbsp;|&nbsp;
 
         </p>

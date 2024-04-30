@@ -16,7 +16,7 @@
         </p>
         <p>
         |<a href="admin_student_pick.php">Student Need Pickup</a>&nbsp;|&nbsp;
-        <a href="admin_assing_pick">Assing Pickup Volunteer</a>&nbsp;|&nbsp;
+        <a href="admin_assing_pick.php">Assing Pickup Volunteer</a>&nbsp;|&nbsp;
         </p>
     </body>
 </html>
